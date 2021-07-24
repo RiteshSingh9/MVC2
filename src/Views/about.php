@@ -1,1 +1,1 @@
-<h1>Abot Page</h1>
+<h1>About Page</h1>

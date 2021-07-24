@@ -6,8 +6,8 @@ class Router
     
     public static function parse($url, $request)
     {
-
         $url = explode('/', trim($url));
+
         // url[2] is controller
         // check if $controller is given
         if(isset($url[2]) && !empty($url[2])) {
@@ -23,10 +23,19 @@ class Router
         if(isset($url[3]) && !empty($url[3])) {
             $request->method = $url[3];
         } else {
-            // if no method is given 
+            // if no method is given
             $request->method = "home";
         }
 
-        $request->params = ['title'=> ucfirst($request->method)];
+        if(isset($url[4]) and !empty($url[4])) {
+            $value = $url[4];
+        } else {
+            $value = "";
+        }
+
+        $request->params = ['title'=> ucfirst($request->method), 'data'=>array(
+            'key'=> $value
+        )];
+//        $request->params = ['title'=> ucfirst($request->method)];
     }
 }

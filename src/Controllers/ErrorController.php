@@ -1,6 +1,4 @@
 <?php
-require ROOT.'src/Core/Controller.php';
-
 
 class ErrorController extends Controller
 {
@@ -11,3 +9,4 @@ class ErrorController extends Controller
         $this->render("Errors/404");
     }
 }
+

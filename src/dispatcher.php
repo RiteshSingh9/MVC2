@@ -1,5 +1,8 @@
 <?php
-
+//spl_autoload_register(function ($className) {
+//    require ROOT.'src/'.$className.'.php';
+//});
+//
 
 class Dispatcher
 {
@@ -19,34 +22,27 @@ class Dispatcher
         call_user_func_array([$controller[0], $controller[1]], [$this->request->params]);
     }
 
+
     public function loadController($controller, $method)
     {
-
         $controller = ucfirst($controller) . 'Controller';
         $file = ROOT . 'src/Controllers/' . $controller . '.php';
-
-        // check if controller file exists
         if (file_exists($file)) {
-            require $file;
-            $controller = new $controller(); // create an instance if file exists
-
-            // check if method exists
-            if (method_exists($controller, $method)) {
-                return [$controller, $method];
-            } else {
-                $this->error = true; // controller not found show 404 error
-            }
+            $controller = new $controller();
         } else {
-            $this->error = true; // controller not found show 404 error
+            $this->error = true; // file not found
+        }
+        // check if mehtod exists
+        if(method_exists($controller, $method)) {
+            return [$controller, $method];
+        } else {
+            $this->error = true;
         }
 
-        // check if error value id true
-        if ($this->error) {
+        if($this->error) {
             $controller = 'ErrorController';
-            $file = ROOT . 'src/Controllers/' . $controller . '.php';
-            $method = "notFound";
-
-            require $file;
+            $file = ROOT.'src/Controller/'.$controller.'.php';
+            $method = 'notFound';
             $controller = new $controller;
             return [$controller, $method];
         }

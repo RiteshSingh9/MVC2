@@ -1,9 +1,6 @@
 <?php
 
-require ROOT.'src/Core/Controller.php';
-
 class UserController extends Controller {
-
     public function home($params)
     {
         $d['title'] = $params['title'];
@@ -11,10 +8,18 @@ class UserController extends Controller {
         $this->render("Users/home");
     } 
 
-    public function users($params) {
-        
+    public function profile($params)
+    {
         $d['title'] = $params['title'];
         $this->set($d);
-        $this->render("Users/userList");
+//        print_r($params['data']);
+        extract($params['data']);
+        if(!empty($key)) {
+            $d['profile_id'] = $key ;
+            $this->set($d);
+        } else {
+            echo "Please provide profile id";
+        }
+        $this->render("Users/profile");
     }
 }

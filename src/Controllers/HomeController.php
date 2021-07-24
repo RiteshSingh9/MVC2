@@ -1,6 +1,4 @@
 <?php
-require ROOT.'src/Core/Controller.php';
-
 
 class HomeController extends Controller
 {
@@ -9,5 +7,13 @@ class HomeController extends Controller
         $d['title'] = $params['title'];
         $this->set($d);
         $this->render("home");
+    }
+
+    public function about($params)
+    {
+        $d['title'] = $params['title'];
+        $this->set($d);
+        echo "About";
+        $this->render("about");
     }
 }
